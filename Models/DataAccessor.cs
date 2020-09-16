@@ -13,7 +13,7 @@ namespace DevHub.Models
     {
         private static IDbConnection GetConnection()
         {
-            return new SqlConnection("Server=GWJSN13\\SQLEXPRESS; Database=DevHub; user id=devhub; password=pass1;");
+            return new SqlConnection("Server=; Database=DevHub; user id=devhub; password=pass1;");
         }
 
         public static List<Question> GetAllQuestions()
