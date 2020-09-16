@@ -6,6 +6,7 @@
 
 //set the question detail editable on edit click
 var oldVals = [];
+var oldAnswerVals = [];
 
 
 function SwitchEnabled() {
@@ -27,6 +28,29 @@ function SwitchEnabled() {
     }
     if (reset) {
         oldVals = [];
+    }
+    return false;
+}
+
+function SwitchAnswer(className) {
+    var reset = false;
+    var elements = document.getElementsByClassName(className);
+    if (elements[0].disabled === false && confirm("You didn't save your changes, are you sure you want to cancel?") == false) {
+        return false;
+    }
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].disabled === false) {
+            elements[i].disabled = true;
+            oldAnswerVals.push(elements[i].val())
+        }
+        else {
+            elements[i].val = oldAnswerVals[i];
+            elements[i].disabled = false;
+            reset = true;
+        }
+    }
+    if (reset) {
+        oldAnswerVals = [];
     }
     return false;
 }
