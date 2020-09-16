@@ -6,14 +6,30 @@ using System.Data.SqlClient;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using System.Data;
+using System.IO;
 
 namespace DevHub.Models
 {
     public class DataAccessor
     {
+        private static string GetConnectionString()
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(@"C:\temp\db4server.txt");
+                string server = reader.ReadLine();
+                reader.Close();
+                return server;
+            }
+            catch
+            {
+                return "Server=.; Database=DevHub; user id=devhub; password=pass1;";
+            }
+        }
+
         private static IDbConnection GetConnection()
         {
-            return new SqlConnection("Server=; Database=DevHub; user id=devhub; password=pass1;");
+            return new SqlConnection(GetConnectionString());
         }
 
         public static List<Question> GetAllQuestions()

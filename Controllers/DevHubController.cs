@@ -77,10 +77,32 @@ namespace DevHub.Controllers
             return RedirectToAction("detail", "devhub", new { id = q.id });
         }
 
-        public IActionResult UpdateAnswer( int answer_id,  string answer_detail)
+        public IActionResult UpdateAnswer( int answer_id,  string answer_detail, string update)
         {
-            Answer a = DataAccessor.GetAnswer(answer_id);               
+            Answer a = DataAccessor.GetAnswer(answer_id);
+            if (update == "Delete")
+            {
+                long q_id = a.question_id;
+                DataAccessor.DeleteAnswer(answer_id);
+                return RedirectToAction("Detail", "DevHub", new { id = q_id });
+            }
+            else
+            {
+                a.detail = answer_detail;
+                DataAccessor.SaveAnswer(a);
+                return RedirectToAction("Detail", "DevHub", new { id = a.question_id });
+            }
+        }
+
+        public IActionResult CreateAnswer(string answer_username, string answer_detail, long question_id)
+        {
+            Answer a = new Answer();
+            a.id = 0;
+            a.posted = DateTime.Now;
             a.detail = answer_detail;
+            a.username = answer_username;
+            a.upvote = 0;
+            a.question_id = question_id;
             DataAccessor.SaveAnswer(a);
             return RedirectToAction("Detail", "DevHub", new { id = a.question_id });
         }
