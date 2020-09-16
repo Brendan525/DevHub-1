@@ -76,5 +76,13 @@ namespace DevHub.Controllers
             DataAccessor.SaveQuestion(q);
             return RedirectToAction("detail", "devhub", new { id = q.id });
         }
+
+        public IActionResult UpdateAnswer( int answer_id,  string answer_detail)
+        {
+            Answer a = DataAccessor.GetAnswer(answer_id);               
+            a.detail = answer_detail;
+            DataAccessor.SaveAnswer(a);
+            return RedirectToAction("Detail", "DevHub", new { id = a.question_id });
+        }
     }
 }

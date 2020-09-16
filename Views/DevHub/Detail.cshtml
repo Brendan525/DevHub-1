@@ -37,12 +37,16 @@
     </form>
     @foreach(Answer a in Model.answers)
     {
-        <form id="@a.id">
-            @a.id, 
-            @a.posted,
-            @a.username,
-            @a.detail,
-            @a.upvote
+        <form id="@a.id" method="post" action="/DevHub/UpdateAnswer">
+           <input type="text"  name="answer_id" value="@a.id" readonly />
+           <input type="text" name="answer_posted" value="@a.posted" readonly />
+            <input type="text" name="answer_username" value="@a.username" readonly />
+            <textarea name="answer_detail" class="@a.id" disabled>@a.detail</textarea>
+            <input type="text" name="answer_upvote" value="@a.upvote" />
+
+            <input type="button" name="edit" value="Edit" onclick="SwitchAnswer(@a.id) || event.preventDefault()"/>
+
+            <input type="submit" name="update" value="Update"/>
         </form>
     }
 </div>
