@@ -35,11 +35,30 @@ namespace DevHub.Controllers
         
         //question detail, edit and submit on this page
         //answer change, add, submit all on same page
+        [HttpGet]
         public IActionResult Detail(long id)
         {
             Question q = DataAccessor.GetQuestion(id);
             q.answers = DataAccessor.GetQuestionAnswers(id);
             return View(q);
+        }
+
+        [HttpPost]
+        public IActionResult Detail(long id, string category, string title, int status, string tags, string detail  )
+        {
+            Question q = DataAccessor.GetQuestion(id);
+            q.category = category;
+            q.title = title;
+            q.status = status;
+            q.tags = tags;
+            q.detail = detail;
+            DataAccessor.SaveQuestion(q);
+            return RedirectToAction("detail", "devhub", new { id = id });
+        }
+
+        public IActionResult PostQuestion()
+        {
+            return View();
         }
     }
 }
