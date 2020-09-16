@@ -1,0 +1,47 @@
+﻿@model Question
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="inline-header">
+    <h1>Question Detail's</h1>
+    <a class="btn btn-dark" asp-action="Index" asp-controller="DevHub">Back</a>
+</div>
+
+<div>
+    <form id="questionForm">
+        <input class="question-detail" type="hidden" disabled value="@Model.id" />
+        <input class="upper-left question-detail" type="text" disabled value="@Model.username" />
+        <input class="question question-detail" type="text" disabled value="@Model.category" />
+        <input class="question question-detail" type="text" disabled value="@Model.title" />
+        <input class="question-detail" type="text" disabled value="@Model.posted" />
+
+        <select class="question question-detail" disabled name="status">
+            @if (Model.status == 0)
+            {
+                <option value="0" selected>Open</option>
+                <option value="1">Closed</option>
+            }
+            else
+            {
+                <option value="0">Open</option>
+                <option value="1" selected>Closed</option>
+            }
+        </select>
+
+        <input class="question question-detail" type="text" disabled value="@Model.tags" />
+        <textarea class="question bottom-right" disabled cols="76" rows="10">@Model.detail</textarea><br />
+        <button class="btn btn-dark"  onclick="SwitchEnabled() || event.preventDefault()">Edit</button>
+        <input class="question btn btn-dark" disabled type="submit" name="action" value="Update" />
+    </form>
+    @foreach(Answer a in Model.answers)
+    {
+        <form id="@a.id">
+            @a.id, 
+            @a.posted,
+            @a.username,
+            @a.detail,
+            @a.upvote
+        </form>
+    }
+</div>

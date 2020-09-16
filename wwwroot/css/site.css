@@ -69,3 +69,79 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+.list-inline {
+    overflow: hidden;
+    padding: 15px;
+    border-style: solid;
+    border-width: thin;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    vertical-align: central;
+    align-content: center;
+    overflow: hidden;
+}
+
+.list-inline:hover {
+    box-shadow: #383333 5px 5px;
+    border-width: medium;
+    background-color: aqua;
+    color: black;
+}
+
+.list-inline a {
+    height: 100%;
+    width: 100%;
+    float: left;
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.form-container select {
+    height: 100%;
+}
+
+.question:focus {
+    outline: none;
+    border-width: thick;
+}
+
+.upper-left {
+    border-radius: 15px 0px 0px 0px;
+}
+
+.bottom-right {
+    border-radius: 0px 0px 15px 0px;
+}
+
+.bottom-left {
+    border-radius: 0px 15px 0px 0px;
+}
+
+.upper-right {
+    border-radius: 0px 0px 0px 15px;
+}
+
+.inline-header {
+    width: 80%;
+    display: flex;
+}
+
+.inline-header h1 {
+    flex: 50%;
+}
+
+.inline-header div {
+    flex: 50%;
+}
+
+.inline-header a {
+    flex: 3%;
+    height: 50%;
+}
+
+.question-detail {
+    width: 182px;
+}

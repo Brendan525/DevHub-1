@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DevHub.Models;
+using Microsoft.AspNetCore.Razor.Language;
 
 namespace DevHub.Controllers
 {
@@ -12,17 +13,19 @@ namespace DevHub.Controllers
         //Open Questions View, 3 most recent?
         //has to have a search
         //add question button here goes to create
-        public IActionResult Index(string search = "")
+        public IActionResult Index(string search = "", string column = "")
         {
             if(search == "")
             {
+                ViewData["Column"] = "tags";
                 ViewData["Message"] = "Recent Questions";
                 return View(DataAccessor.GetRecentQuestions());
             }
             else
             {
+                ViewData["Column"] = column;
                 ViewData["Message"] = "Search Results";
-                return View(DataAccessor.SearchByTag(search));
+                return View(DataAccessor.SearchQuestions(column, search));
             }
         }
 
@@ -32,6 +35,11 @@ namespace DevHub.Controllers
         
         //question detail, edit and submit on this page
         //answer change, add, submit all on same page
-
+        public IActionResult Detail(long id)
+        {
+            Question q = DataAccessor.GetQuestion(id);
+            q.answers = DataAccessor.GetQuestionAnswers(id);
+            return View(q);
+        }
     }
 }

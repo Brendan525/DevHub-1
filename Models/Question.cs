@@ -20,5 +20,11 @@ namespace DevHub.Models
         public string tags { get; set; }
         public int status { get; set; }
 
+        public List<Answer> answers;
+
+        public Question()
+        {
+            answers = new List<Answer>();
+        }
     }
 }
