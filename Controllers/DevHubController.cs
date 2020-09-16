@@ -58,7 +58,23 @@ namespace DevHub.Controllers
 
         public IActionResult PostQuestion()
         {
+            ViewData["Today"] = DateTime.Now.Date.ToShortDateString();
             return View();
+        }
+
+        public IActionResult Create(long id, string category, string title, int status, string tags, string detail, string username )
+        {
+            Question q = new Question();
+            q.category = category;
+            q.title = title;
+            q.status = status;
+            q.tags = tags;
+            q.detail = detail;
+            q.username = username;
+            q.posted = DateTime.Now;
+            q.id = 0;
+            DataAccessor.SaveQuestion(q);
+            return RedirectToAction("detail", "devhub", new { id = q.id });
         }
     }
 }

@@ -11,12 +11,13 @@
 <div>
     <form id="questionForm" method="post" action="/DevHub/Detail">
         <input class="question-detail" type="hidden" readonly value="@Model.id" name="id" />
-        <input class="upper-left question-detail" type="text" readonly value="@Model.username" />
-        <input class="question question-detail" type="text" disabled value="@Model.category" name="category" />
-        <input class="question question-detail" type="text" disabled value="@Model.title" name="title" />
-        <input class="question-detail" type="text" readonly value="@Model.posted" />
 
-        <select class="question question-detail" disabled name="status">
+        <input class="upper-left question-detail" type="text" disabled value="@Model.username" />
+        <input class="question question-detail" type="text" disabled value="@Model.category" name="category" required />
+        <input class="question question-detail" type="text" disabled value="@Model.title" name="title" required />
+        <input class="question-detail" type="text" disabled value="@Model.posted" />
+
+        <select class="question question-detail" disabled name="status" required>
             @if (Model.status == 0)
             {
                 <option value="0" selected>Open</option>
@@ -29,8 +30,8 @@
             }
         </select>
 
-        <input class="question question-detail" type="text" disabled value="@Model.tags" name="tags" />
-        <textarea class="question bottom-right" disabled cols="76" rows="10" name="detail">@Model.detail</textarea><br />
+        <input class="question question-detail" type="text" disabled value="@Model.tags" name="tags" required />
+        <textarea class="question bottom-right" disabled cols="76" rows="10" name="detail" required >@Model.detail</textarea><br />
         <button class="btn btn-dark"  onclick="SwitchEnabled() || event.preventDefault()">Edit</button>
         <input class="question btn btn-dark" disabled type="submit" name="action" value="Update" />
     </form>
