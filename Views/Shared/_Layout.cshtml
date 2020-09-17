@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - DevHub</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+
 </head>
 <body>
     <header>
@@ -24,15 +26,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            @if (Html.ViewContext.HttpContext.Request.Cookies["Username"] is null || Html.ViewContext.HttpContext.Request.Cookies["Username"] == "")
+                            {
+                            <div class="loginbtnright">
+                                <button id="LoginHelper" class="btn btn-dark" onclick="DisplayLogin() || event.preventDefault()">Login</button>
+                                <form hidden id="DisplayLogin" method="post" action="/DevHub/Login">
+                                    <input type="text" placeholder="Username" name="Username" required />
+                                    <input class="btn btn-dark" type="submit" value="Login" />
+                                </form>
+                            </div>
+                            }
+                        </li>
                     </ul>
-                    @if(Html.ViewContext.HttpContext.Request.Cookies["Username"] is null || Html.ViewContext.HttpContext.Request.Cookies["Username"] == "")
-                    {
-                        <button id="LoginHelper" class="btn btn-dark" onclick="DisplayLogin() || event.preventDefault()">Login</button>
-                        <form hidden id="DisplayLogin" method="post" action="/DevHub/Login">
-                            <input type="text" placeholder="Username" name="Username" required />
-                            <input class="btn btn-dark" type="submit" value="Login" />
-                        </form>
-                    }
+                    
                 </div>
             </div>
         </nav>

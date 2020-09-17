@@ -98,6 +98,14 @@ namespace DevHub.Controllers
             }
         }
 
+        public IActionResult Upvote(int answer_upvote)
+        {
+            Answer a = DataAccessor.GetAnswer(answer_upvote);
+            a.upvote++;
+            DataAccessor.SaveAnswer(a);
+            return RedirectToAction("Detail","DevHub", new { id = a.question_id });
+        }
+
         public IActionResult CreateAnswer(string answer_username, string answer_detail, long question_id)
         {
             Answer a = new Answer();
