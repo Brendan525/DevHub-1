@@ -58,6 +58,10 @@ namespace DevHub.Controllers
 
         public IActionResult PostQuestion()
         {
+            if(HttpContext.Request.Cookies["Username"] is null || HttpContext.Request.Cookies["Username"] == "")
+            {
+                return RedirectToAction("Index", "DevHub");
+            }
             ViewData["Today"] = DateTime.Now.Date.ToShortDateString();
             return View();
         }
@@ -114,6 +118,7 @@ namespace DevHub.Controllers
             {
                 return RedirectToAction("Index", "DevHub");
             }
+            username = username.ToLower();
             HttpContext.Response.Cookies.Append("Username", username);
             return RedirectToAction("Index", "DevHub");
         }
