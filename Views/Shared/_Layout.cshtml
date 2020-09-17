@@ -25,6 +25,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    @if(Html.ViewContext.HttpContext.Request.Cookies["Username"] is null || Html.ViewContext.HttpContext.Request.Cookies["Username"] == "")
+                    {
+                        <button id="LoginHelper" class="btn btn-dark" onclick="DisplayLogin() || event.preventDefault()">Login</button>
+                        <form hidden id="DisplayLogin" method="post" action="/DevHub/Login">
+                            <input type="text" placeholder="Username" name="Username" required />
+                            <input class="btn btn-dark" type="submit" value="Login" />
+                        </form>
+                    }
                 </div>
             </div>
         </nav>

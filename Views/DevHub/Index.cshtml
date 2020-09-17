@@ -1,6 +1,15 @@
 ﻿@model List<Question>
 @{
     ViewData["Title"] = "Index";
+    string loggedUser;
+    if (!(Html.ViewContext.HttpContext.Request.Cookies["Username"] is null))
+    {
+        loggedUser = Html.ViewContext.HttpContext.Request.Cookies["Username"];
+    }
+    else
+    {
+        loggedUser = "";
+    }
 }
 
 <div class="inline-header">
@@ -17,8 +26,10 @@
             <input type="submit" value="Go" />
         </form>
     </div>
-    <a class="btn btn-dark" asp-action="PostQuestion" asp-controller="DevHub">New Question</a>
-
+    @if (loggedUser != "")
+    {
+        <a class="btn btn-dark" asp-action="PostQuestion" asp-controller="DevHub">New Question</a>
+    }
 </div>
 
 <h3>@ViewData["Message"]</h3>

@@ -106,5 +106,16 @@ namespace DevHub.Controllers
             DataAccessor.SaveAnswer(a);
             return RedirectToAction("Detail", "DevHub", new { id = a.question_id });
         }
+
+        [HttpPost]
+        public IActionResult Login(string username)
+        {
+            if(username is null || username == "")
+            {
+                return RedirectToAction("Index", "DevHub");
+            }
+            HttpContext.Response.Cookies.Append("Username", username);
+            return RedirectToAction("Index", "DevHub");
+        }
     }
 }

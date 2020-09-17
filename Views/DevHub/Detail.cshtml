@@ -1,6 +1,15 @@
 ﻿@model Question
 @{
     ViewData["Title"] = "Detail";
+    string loggedUser;
+    if(!(Html.ViewContext.HttpContext.Request.Cookies["Username"] is null))
+    {
+        loggedUser = Html.ViewContext.HttpContext.Request.Cookies["Username"];
+    }
+    else
+    {
+        loggedUser = "";
+    }
 }
 
 <div class="inline-header">
@@ -32,12 +41,15 @@
 
         <input class="question question-detail" type="text" disabled value="@Model.tags" name="tags" required />
         <textarea class="question bottom-right" disabled cols="76" rows="10" name="detail" required>@Model.detail</textarea><br />
-        <button class="btn btn-dark" onclick="SwitchEnabled() || event.preventDefault()">Edit</button>
-        <input class="question btn btn-dark" disabled type="submit" name="action" value="Update" />
+        @if (loggedUser == Model.username)
+        {
+            <button class="btn btn-dark" onclick="SwitchEnabled() || event.preventDefault()">Edit</button>
+            <input class="question btn btn-dark" disabled type="submit" name="action" value="Update" />
+        }
     </form>
     @foreach (Answer a in Model.answers)
     {
-        <form id="@a.id" method="post" action="/DevHub/UpdateAnswer">
+        <form method="post" action="/DevHub/UpdateAnswer">
             <input type="hidden" name="answer_id" value="@a.id" readonly />
             <input type="hidden" name="answer_posted" value="@a.posted" readonly />
             <input type="text" disabled value="@a.posted" readonly />
@@ -46,22 +58,22 @@
             <textarea name="answer_detail" class="@a.id" disabled>@a.detail</textarea>
             <input type="text" name="answer_upvote" value="@a.upvote" />
 
-            @if(Model.status == 0)
+            @if(Model.status == 0 && loggedUser == a.username)
             {
-                <input type="button" name="edit" value="Edit" onclick="SwitchAnswer(@a.id) || event.preventDefault()" />
+                <input id="@a.id" type="button" name="edit" value="Edit" onclick="SwitchAnswer(@a.id) || event.preventDefault()" />
 
-                <input class="@a.id" type="submit" name="update" value="Update" />
+                <input id="@($"{a.id}_update")" type="submit" hidden name="update" value="Update" />
                 <input type="submit" name="update" value="Delete" />
             }
         </form>
     }
-    @if (Model.status == 0)
+    @if (Model.status == 0 && loggedUser != "")
     {
         <form id="" method="post" action="/DevHub/CreateAnswer">
             <input type="hidden" name="answer_id" value="0" readonly />
             <input type="text" disabled value="@ViewData["Today"]" name="posted" />
-            <input type="hidden" name="answer_username" value="thechuck" readonly /><!--username pass to form field-->
-            <input type="text" value="thechuck" disabled /> <!--username display field-->
+            <input type="hidden" name="answer_username" value="@loggedUser" readonly /><!--username pass to form field-->
+            <input type="text" value="@loggedUser" disabled /> <!--username display field-->
             <textarea name="answer_detail" class=""></textarea>
 
             <input type="hidden" value="@Model.id" name="question_id" />

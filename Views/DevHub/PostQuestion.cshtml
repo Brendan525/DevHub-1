@@ -1,25 +1,41 @@
 ﻿
 @{
     ViewData["Title"] = "PostQuestion";
+    string loggedUser;
+    if (!(Html.ViewContext.HttpContext.Request.Cookies["Username"] is null))
+    {
+        loggedUser = Html.ViewContext.HttpContext.Request.Cookies["Username"];
+    }
+    else
+    {
+        loggedUser = "";
+    }
 }
 
 <h1>PostQuestion</h1>
 
-<form id="questionForm" method="post" action="/DevHub/Create">
+@if (loggedUser != "")
+{
+    <form id="questionForm" method="post" action="/DevHub/Create">
 
-    <input class="question-detail" type="hidden" readonly value="0" name="id" />
-    <input class="upper-left question-detail" type="hidden" readonly name="username" value="thedave" />
-    <input class="upper-left question-detail" type="text" disabled value="thedave" />
-    <input class="question question-detail" type="text" value="" name="category" placeholder="Category" required />
-    <input class="question question-detail" type="text" value="" name="title" placeholder="Title" required />
+        <input class="question-detail" type="hidden" readonly value="0" name="id" />
+        <input class="upper-left question-detail" type="hidden" readonly name="username" value="@loggedUser" />
+        <input class="upper-left question-detail" type="text" disabled value="@loggedUser" />
+        <input class="question question-detail" type="text" value="" name="category" placeholder="Category" required />
+        <input class="question question-detail" type="text" value="" name="title" placeholder="Title" required />
 
-    <input class="question-detail" type="text" disabled value="@ViewData["Today"]" name="posted" />
+        <input class="question-detail" type="text" disabled value="@ViewData["Today"]" name="posted" />
 
-    <input class="question question-detail" name="status" hidden placeholder="Open" value="0" />
-    <input class="question question-detail" disabled placeholder="Open" value="Open" />
+        <input class="question question-detail" name="status" hidden placeholder="Open" value="0" />
+        <input class="question question-detail" disabled placeholder="Open" value="Open" />
 
-    <input class="question question-detail" type="text" value="" name="tags" placeholder="#Tags" required />
-    <textarea class="question bottom-right" cols="76" rows="10" name="detail" id="detail" placeholder="Your Question?" required></textarea><br />
+        <input class="question question-detail" type="text" value="" name="tags" placeholder="#Tags" required />
+        <textarea class="question bottom-right" cols="76" rows="10" name="detail" id="detail" placeholder="Your Question?" required></textarea><br />
 
-    <input class="question btn btn-dark" type="submit" name="action" value="Post" />
-</form>
+        <input class="question btn btn-dark" type="submit" name="action" value="Post" />
+    </form>
+}
+else
+{
+    <h1>Please log in to post a question.</h1>
+}

@@ -52,5 +52,26 @@ function SwitchAnswer(className) {
     if (reset) {
         oldAnswerVals = [];
     }
+
+    var editButton = document.getElementById(className);
+    var updateClass = className + "_update";
+    var updateButton = document.getElementById(updateClass);
+    if (editButton.hidden == true) {
+        editButton.hidden = false;
+        updateButton.hidden = true;
+    }
+    else {
+        editButton.hidden = true;
+        updateButton.hidden = false;
+    }
+
     return false;
+}
+
+function DisplayLogin() {
+    var show = document.getElementById("DisplayLogin");
+    var hide = document.getElementById("LoginHelper");
+    show.hidden = false;
+    hide.hidden = true;
+    return true;
 }
