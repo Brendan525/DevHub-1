@@ -145,3 +145,11 @@ body {
 .question-detail {
     width: 182px;
 }
+
+.loginbtnright {
+    position: fixed;
+    top: 8px;
+    right: 13.8%;
+    width: auto;
+    height: auto;
+}

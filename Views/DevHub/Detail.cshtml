@@ -56,9 +56,9 @@
             <input type="text" disabled value="@a.username" readonly />
             <input type="hidden" name="answer_username" value="@a.username" readonly />
             <textarea name="answer_detail" class="@a.id" disabled>@a.detail</textarea>
-            <input type="text" name="answer_upvote" value="@a.upvote" />
+            <input type="text" name="answer_upvote" value="@a.upvote" disabled />
 
-            @if(Model.status == 0 && loggedUser == a.username)
+            @if (Model.status == 0 && loggedUser == a.username)
             {
                 <input id="@a.id" type="button" name="edit" value="Edit" onclick="SwitchAnswer(@a.id) || event.preventDefault()" />
 
@@ -66,7 +66,16 @@
                 <input type="submit" name="update" value="Delete" />
             }
         </form>
-    }
+
+            @if (loggedUser != "")
+            {
+                <form action="/DevHub/Upvote" method="POST">
+                <input type="hidden" name="answer_upvote" value="@a.id" />
+                <input type="submit" value="Upvote" readonly />
+                </form>
+            }
+             
+        }
     @if (Model.status == 0 && loggedUser != "")
     {
         <form id="" method="post" action="/DevHub/CreateAnswer">
