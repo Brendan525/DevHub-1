@@ -48,6 +48,11 @@ namespace DevHub.Models
 
         public static List<Question> SearchQuestions(string column, string search)
         {
+            //while (search.IndexOf("'")>=0){ search.add(search.IndexOf("'"));}
+            if (search.Contains("'"))
+            {
+                search = search.Replace("'", "' + char(39) + '");
+            }
             string query = $"SELECT * FROM Question WHERE {column} like '%{search}%'";
             IDbConnection db = GetConnection();
             return db.Query<Question>(query).ToList();
