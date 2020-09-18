@@ -133,16 +133,22 @@ namespace DevHub.Models
         {
             List<string> tags = new List<string>();
             List<Question> questions = GetAllQuestions();
+
+            
             foreach(Question q in questions)
             {
-                string[] tagsArray = q.tags.Split("#");
+                if (q.tags != null && q.tags != "") {
 
-                foreach(string tag in tagsArray)
-                {
-                    if (!tags.Contains(tag) && tag !="")
+                    string[] tagsArray = q.tags.Split("#");
+
+                    foreach (string tag in tagsArray)
                     {
-                        tags.Add(tag);                       
+                        if (!tags.Contains(tag) && tag != "")
+                        {
+                            tags.Add(tag);
+                        }
                     }
+
                 }
             }
             return tags;
