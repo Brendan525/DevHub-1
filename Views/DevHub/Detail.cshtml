@@ -47,16 +47,18 @@
             <input class="question btn btn-dark" disabled type="submit" name="action" value="Update" />
         }
     </form>
+    <br />
+    <h2>Anwers:</h2>
     @foreach (Answer a in Model.answers)
     {
         <form method="post" action="/DevHub/UpdateAnswer">
             <input type="hidden" name="answer_id" value="@a.id" readonly />
             <input type="hidden" name="answer_posted" value="@a.posted" readonly />
             <input type="text" disabled value="@a.posted" readonly />
-            <input type="text" disabled value="@a.username" readonly />
+            <input type="text" disabled value="@a.username" readonly style="width:130px"/>
             <input type="hidden" name="answer_username" value="@a.username" readonly />
-            <textarea name="answer_detail" class="@a.id" disabled>@a.detail</textarea>
-            <input type="text" name="answer_upvote" value="@a.upvote" disabled />
+            Upvotes:
+            <input type="text" name="answer_upvote" value="@a.upvote" disabled style="width:50px"/>
 
             @if (Model.status == 0 && loggedUser == a.username)
             {
@@ -65,6 +67,8 @@
                 <input id="@($"{a.id}_update")" type="submit" hidden name="update" value="Update" />
                 <input type="submit" name="update" value="Delete" />
             }
+            <br />
+            <textarea name="answer_detail" class="@a.id" disabled rows="4" cols="76">@a.detail</textarea>
         </form>
 
             @if (loggedUser != "")
@@ -74,7 +78,7 @@
                 <input type="submit" value="Upvote" readonly />
                 </form>
             }
-             
+            <br /> 
         }
     @if (Model.status == 0 && loggedUser != "")
     {
@@ -83,10 +87,12 @@
             <input type="text" disabled value="@ViewData["Today"]" name="posted" />
             <input type="hidden" name="answer_username" value="@loggedUser" readonly /><!--username pass to form field-->
             <input type="text" value="@loggedUser" disabled /> <!--username display field-->
-            <textarea name="answer_detail" class=""></textarea>
+
 
             <input type="hidden" value="@Model.id" name="question_id" />
             <input type="submit" name="update" value="Add Answer" />
+            <br />
+            <textarea name="answer_detail" class="" rows="4" cols="76"></textarea>
         </form>
     }
 </div>

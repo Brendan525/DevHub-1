@@ -153,3 +153,19 @@ body {
     width: auto;
     height: auto;
 }
+
+.indexMain {
+    background-color: white;
+    text-align: left;
+    vertical-align: top;
+    width: 95%;
+    padding-left: 5px;
+}
+
+.indexSecondary {
+
+    background-color: lightgrey;
+    text-align: left, top;
+    vertical-align: top;
+    width: 150px
+}

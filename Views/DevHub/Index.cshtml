@@ -33,37 +33,45 @@
     }
 </div>
 
-<h3>@ViewData["Message"]</h3>
-<div >    
-    @foreach (Question q in Model)
-    {
-        <div class="list-inline">
-            <a asp-action="Detail" asp-controller="DevHub" asp-route-id="@q.id">@q.title (@q.username)</a>
-        </div>
-    }
-</div>
+<table style = "border: 1px solid black; width: 100%">
+    <tr>
+        <td style="vertical-align:top">
+            <div class="indexMain">
+                <h3>@ViewData["Message"]</h3>
+                @foreach (Question q in Model)
+                {
+                    <div class="list-inline">
+                        <a asp-action="Detail" asp-controller="DevHub" asp-route-id="@q.id">@q.title (@q.username)</a>
+                    </div>
+                }
+            </div>
+        </td>
+        <td  style="vertical-align:top">
+            <div class="indexSecondary">
+                <h3>Categories</h3>
+                @foreach (string cat in (List<string>)ViewData["category"])
+                {
+                    <form method="post" action="/DevHub/Index">
+                        <input type="text" hidden name="column" value="category" />
+                        <input type="text" hidden name="search" value="@cat" />
+                        <input type="submit" value="@cat" />
 
-<h3>Categories</h3>
-<div>
-    @foreach (string cat in (List<string>)ViewData["category"] )
-    {
-        <form method="post" action="/DevHub/Index">
-            <input type="text" hidden name="column" value="category"/>
-            <input type="text" hidden name="search" value="@cat"/>
-            <input type="submit" value="@cat" />
-
-        </form>
-    }
-</div>
-
-<h3>Tags</h3>
-<div>
-    @foreach(string tag in (List<string>)ViewData["tags"])
-    {
-       <form method="post" action="/DevHub/Index">
-           <input type="text" hidden name="column" value="tags"/>
-           <input type="text" hidden name="search" value="@tag" />
-           <input type="submit" value="@tag" />
-       </form>
-    }
-</div>
+                    </form>
+                }
+            </div>
+        </td>
+        <td style="vertical-align:top">
+            <div class="indexSecondary">
+                <h3>Tags</h3>
+                @foreach (string tag in (List<string>)ViewData["tags"])
+                {
+                    <form method="post" action="/DevHub/Index">
+                        <input type="text" hidden name="column" value="tags" />
+                        <input type="text" hidden name="search" value="@tag" />
+                        <input type="submit" value="@tag" />
+                    </form>
+                }
+            </div>
+        </td>
+    </tr>
+</table>
