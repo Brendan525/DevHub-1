@@ -23,7 +23,8 @@ namespace DevHub.Models
             }
             catch
             {
-                return "Server=.; Database=DevHub; user id=devhub; password=pass1;";
+                return "Server=; Database = DevHub; user id = devhub; password=pass1;";
+               
             }
         }
 
@@ -116,9 +117,35 @@ namespace DevHub.Models
 
         public static List<Answer> GetQuestionAnswers(long question_id)
         {
-            string query = $"SELECT * FROM answer WHERE question_id = {question_id}";
+            string query = $"SELECT * FROM answer WHERE question_id = {question_id} ORDER BY upvote DESC";
             IDbConnection db = GetConnection();
             return db.Query<Answer>(query).ToList();
+        }
+
+        public static List<string> GetCategory()
+        {
+            string query = $"SELECT DISTINCT category FROM question";
+            IDbConnection db = GetConnection();
+            return db.Query<string>(query).ToList();
+        }
+
+        public static List<string> GetTags()
+        {
+            List<string> tags = new List<string>();
+            List<Question> questions = GetAllQuestions();
+            foreach(Question q in questions)
+            {
+                string[] tagsArray = q.tags.Split("#");
+
+                foreach(string tag in tagsArray)
+                {
+                    if (!tags.Contains(tag) && tag !="")
+                    {
+                        tags.Add(tag);                       
+                    }
+                }
+            }
+            return tags;
         }
     }
 }

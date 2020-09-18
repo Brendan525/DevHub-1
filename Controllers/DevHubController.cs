@@ -15,6 +15,9 @@ namespace DevHub.Controllers
         //add question button here goes to create
         public IActionResult Index(string search = "", string column = "")
         {
+            ViewData["category"] = DataAccessor.GetCategory();
+            ViewData["tags"] = DataAccessor.GetTags();
+                
             if(search == "")
             {
                 ViewData["Column"] = "tags";
@@ -27,6 +30,7 @@ namespace DevHub.Controllers
                 ViewData["Message"] = "Search Results";
                 return View(DataAccessor.SearchQuestions(column, search));
             }
+
         }
 
         //Archive, closed questions
