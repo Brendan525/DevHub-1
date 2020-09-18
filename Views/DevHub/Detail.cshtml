@@ -17,82 +17,96 @@
     <a class="btn btn-dark" asp-action="Index" asp-controller="DevHub">Back To Home Page</a>
 </div>
 
-<div>
-    <form id="questionForm" method="post" action="/DevHub/Detail">
-        <input class="question-detail" type="hidden" readonly value="@Model.id" name="id" />
+<div class="margin-top">
+    <div class="content-container-blue">
+        <form class="content-section" id="questionForm" method="post" action="/DevHub/Detail">
+            <input class="question-detail" type="hidden" readonly value="@Model.id" name="id" />
 
-        <input class="upper-left question-detail" type="text" disabled value="@Model.username" />
-        <input class="question question-detail" type="text" disabled value="@Model.category" name="category" required />
-        <input class="question question-detail" type="text" disabled value="@Model.title" name="title" required />
-        <input class="question-detail" type="text" disabled value="@Model.posted" />
+            By:
+            <input class="question-detail" type="text" disabled value="@Model.username" />
+            Posted:
+            <input class="question-detail" type="text" disabled value="@Model.posted" />
+            <select class="question question-detail" disabled name="status" required>
+                @if (Model.status == 0)
+                {
+                    <option value="0" selected>Open</option>
+                    <option value="1">Closed</option>
+                }
+                else
+                {
+                    <option value="0">Open</option>
+                    <option value="1" selected>Closed</option>
+                }
+            </select>
+            <br />
+            Category:
+            <input class="question question-detail" type="text" disabled value="@Model.category" name="category" required />
+            Title:
+            <input class="question question-detail" type="text" disabled value="@Model.title" name="title" required />
 
-        <select class="question question-detail" disabled name="status" required>
-            @if (Model.status == 0)
+            <br />
+            <textarea class="question text-input" disabled rows="10" name="detail" required>@Model.detail</textarea><br />
+            @if (loggedUser == Model.username)
             {
-                <option value="0" selected>Open</option>
-                <option value="1">Closed</option>
+                <button id="q_edit" class="btn btn-dark" onclick="SwitchEnabled() || event.preventDefault()">Edit</button>
+                <input id="q_update" class="btn btn-dark" hidden type="submit" name="action" value="Update" />
             }
-            else
-            {
-                <option value="0">Open</option>
-                <option value="1" selected>Closed</option>
-            }
-        </select>
-
-        <input class="question question-detail" type="text" disabled value="@Model.tags" name="tags" required />
-        <textarea class="question bottom-right" disabled cols="76" rows="10" name="detail" required>@Model.detail</textarea><br />
-        @if (loggedUser == Model.username)
-        {
-            <button class="btn btn-dark" onclick="SwitchEnabled() || event.preventDefault()">Edit</button>
-            <input class="question btn btn-dark" disabled type="submit" name="action" value="Update" />
-        }
-    </form>
+            Tags:
+            <input class="question question-detail" type="text" style="width: 80%" disabled value="@Model.tags" name="tags" required />
+        </form>
+    </div>
     <br />
     <h2>Anwers:</h2>
     @foreach (Answer a in Model.answers)
     {
-        <form method="post" action="/DevHub/UpdateAnswer">
-            <input type="hidden" name="answer_id" value="@a.id" readonly />
-            <input type="hidden" name="answer_posted" value="@a.posted" readonly />
-            <input type="text" disabled value="@a.posted" readonly />
-            <input type="text" disabled value="@a.username" readonly style="width:130px"/>
-            <input type="hidden" name="answer_username" value="@a.username" readonly />
-            Upvotes:
-            <input type="text" name="answer_upvote" value="@a.upvote" disabled style="width:50px"/>
+        <div class="content-container-gray">
+            <form class="content-section" method="post" action="/DevHub/UpdateAnswer">
+                <input type="hidden" name="answer_id" value="@a.id" readonly />
+                <input type="hidden" name="answer_posted" value="@a.posted" readonly />
+                <input type="hidden" name="answer_username" value="@a.username" readonly />
+                By:
+                <input type="text" class="question-detail" disabled value="@a.username" readonly />
+                Posted:
+                <input type="text" class="question-detail" disabled value="@a.posted" readonly />
+                Upvotes:
+                <input type="text" class="question-detail" name="answer_upvote" value="@a.upvote" disabled style="width:50px" />
+                @if (Model.status == 0 && loggedUser == a.username)
+                {
+                    <br />
+                    <input class="btn btn-dark" id="@a.id" type="button" name="edit" value="Edit" onclick="SwitchAnswer(@a.id) || event.preventDefault()" />
 
-            @if (Model.status == 0 && loggedUser == a.username)
-            {
-                <input id="@a.id" type="button" name="edit" value="Edit" onclick="SwitchAnswer(@a.id) || event.preventDefault()" />
+                    <input class="btn btn-dark" id="@($"{a.id}_update")" type="submit" hidden name="update" value="Update" />
+                    <input class="btn btn-dark" type="submit" name="update" value="Delete" />
+                }
+                <br />
+                <textarea name="answer_detail" class="@a.id text-input" disabled rows="4" cols="76" required>@a.detail</textarea>
+            </form>
+        </div>
 
-                <input id="@($"{a.id}_update")" type="submit" hidden name="update" value="Update" />
-                <input type="submit" name="update" value="Delete" />
-            }
-            <br />
-            <textarea name="answer_detail" class="@a.id" disabled rows="4" cols="76">@a.detail</textarea>
-        </form>
-
-            @if (loggedUser != "")
-            {
-                <form action="/DevHub/Upvote" method="POST">
+        @if (loggedUser != "")
+        {
+            <form action="/DevHub/Upvote" method="POST">
                 <input type="hidden" name="answer_upvote" value="@a.id" />
-                <input type="submit" value="Upvote" readonly />
-                </form>
-            }
-            <br /> 
+                <input class="btn btn-dark" type="submit" value="Upvote" readonly />
+            </form>
         }
+        <br />
+    }
     @if (Model.status == 0 && loggedUser != "")
     {
-        <form id="" method="post" action="/DevHub/CreateAnswer">
-            <input type="hidden" name="answer_id" value="0" readonly />
-            <input type="text" disabled value="@ViewData["Today"]" name="posted" />
-            <input type="hidden" name="answer_username" value="@loggedUser" readonly /><!--username pass to form field-->
-            <input type="text" value="@loggedUser" disabled /> <!--username display field-->
+        <div class="content-container-gray">
+            <form class="content-section" id="" method="post" action="/DevHub/CreateAnswer">
+                <input type="hidden" name="answer_id" value="0" readonly />
+                <input type="hidden" class="question-detail" disabled value="@ViewData["Today"]" name="posted" />
+                <input type="hidden" name="answer_username" value="@loggedUser" readonly /><!--username pass to form field-->
+                <input type="hidden" class="question-detail" value="@loggedUser" disabled /> <!--username display field-->
 
 
-            <input type="hidden" value="@Model.id" name="question_id" />
-            <input type="submit" name="update" value="Add Answer" />
-            <br />
-            <textarea name="answer_detail" class="" rows="4" cols="76"></textarea>
-        </form>
+                <input type="hidden" value="@Model.id" name="question_id" />
+                <input type="submit" class="btn btn-dark" name="update" value="Add Answer" />
+                <br />
+                <textarea name="answer_detail" class="text-input" rows="4" cols="76" required></textarea>
+            </form>
+        </div>
     }
 </div>

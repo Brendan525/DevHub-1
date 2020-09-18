@@ -49,7 +49,7 @@ namespace DevHub.Models
         public static List<Question> SearchQuestions(string column, string search)
         {
             //while (search.IndexOf("'")>=0){ search.add(search.IndexOf("'"));}
-            if (search.Contains("'"))
+            if (!(search is null) && search.Contains("'"))
             {
                 search = search.Replace("'", "' + char(39) + '");
             }

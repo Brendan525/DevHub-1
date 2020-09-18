@@ -14,9 +14,8 @@
 
 <div class="inline-header">
     <div class="form-container">
-        <label for="search">Search</label>
         <form id="search" method="get" action="/DevHub/">
-            <input type="text" name="search" />
+            Search
             <select id="column" name="column">
 
                 <option value="tags">Tags</option>
@@ -24,7 +23,9 @@
                 <option value="detail">Question Body</option>
                 <option value="category">Category</option>
             </select>
-            <input type="submit" value="Go" />
+            <br />
+            <input type="text" name="search" />
+            <input class="btn btn-dark" type="submit" value="Go" />
         </form>
     </div>
     @if (loggedUser != "")
@@ -33,9 +34,9 @@
     }
 </div>
 
-<table style = "border: 1px solid black; width: 100%">
+<table class="indexTable" cellspacing="0" cellpadding="0" >
     <tr>
-        <td style="vertical-align:top">
+        <td class="indexBreakerMain">
             <div class="indexMain">
                 <h3>@ViewData["Message"]</h3>
                 @foreach (Question q in Model)
@@ -46,26 +47,25 @@
                 }
             </div>
         </td>
-        <td  style="vertical-align:top">
+        <td  class="indexBreakerSecondary">
             <div class="indexSecondary">
                 <h3>Categories</h3>
                 @foreach (string cat in (List<string>)ViewData["category"])
                 {
-                    <form method="post" action="/DevHub/Index">
+                    <form class="margin-top" method="post" action="/DevHub/Index">
                         <input type="text" hidden name="column" value="category" />
                         <input type="text" hidden name="search" value="@cat" />
                         <input type="submit" value="@cat" />
-
                     </form>
                 }
             </div>
         </td>
-        <td style="vertical-align:top">
+        <td class="indexBreakerSecondary">
             <div class="indexSecondary">
                 <h3>Tags</h3>
                 @foreach (string tag in (List<string>)ViewData["tags"])
                 {
-                    <form method="post" action="/DevHub/Index">
+                    <form class="margin-top" method="post" action="/DevHub/Index">
                         <input type="text" hidden name="column" value="tags" />
                         <input type="text" hidden name="search" value="@tag" />
                         <input type="submit" value="@tag" />

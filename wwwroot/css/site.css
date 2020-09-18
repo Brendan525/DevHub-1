@@ -86,7 +86,7 @@ body {
 .list-inline:hover {
     box-shadow: #383333 5px 5px;
     border-width: medium;
-    background-color: aqua;
+    background-color: lightskyblue;
     color: black;
 }
 
@@ -101,27 +101,6 @@ body {
 
 .form-container select {
     height: 100%;
-}
-
-.question:focus {
-    outline: none;
-    border-width: thick;
-}
-
-.upper-left {
-    border-radius: 15px 0px 0px 0px;
-}
-
-.bottom-right {
-    border-radius: 0px 0px 15px 0px;
-}
-
-.bottom-left {
-    border-radius: 0px 15px 0px 0px;
-}
-
-.upper-right {
-    border-radius: 0px 0px 0px 15px;
 }
 
 .inline-header {
@@ -142,30 +121,79 @@ body {
     height: 50%;
 }
 
-.question-detail {
-    width: 182px;
-}
-
 .loginbtnright {
-    position: fixed;
+    position: absolute;
     top: 8px;
     right: 13.8%;
     width: auto;
     height: auto;
 }
 
+.indexTable {
+    width: 100%;
+}
+
+.indexBreakerMain {
+    vertical-align: top;
+    width: 80%;
+}
+
+.indexBreakerSecondary {
+    vertical-align: top;
+    width: 10%;
+    background-color: lightgrey;
+    padding: 5px 5px 5px 5px;
+}
+
 .indexMain {
+    float: left;
     background-color: white;
     text-align: left;
     vertical-align: top;
-    width: 95%;
-    padding-left: 5px;
+    width: 80%;
 }
 
 .indexSecondary {
-
-    background-color: lightgrey;
-    text-align: left, top;
+    float: right;
+    
+    text-align: left;
     vertical-align: top;
-    width: 150px
+    height: 100%;
+}
+
+.content-container-blue {
+    background-color: lightskyblue;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    color: black;
+}
+
+.content-container-gray {
+    background-color: darkgray;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    color: black;
+}
+
+.content-section {
+    padding: 5px 5px 5px 5px;
+    border-radius: 10px;
+}
+
+.text-input {
+    margin-top: 5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+}
+
+.question-detail {
+    border-style: none;
+    background-color: inherit;
+    color: black;
+}
+
+.margin-top {
+    margin-top: 5px;
 }

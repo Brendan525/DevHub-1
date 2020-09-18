@@ -11,6 +11,12 @@ var oldAnswerVals = [];
 
 function SwitchEnabled() {
     var reset = false;
+
+    var show = document.getElementById("q_update");
+    var hide = document.getElementById("q_edit");
+    show.hidden = false;
+    hide.hidden = true;
+
     var elements = document.getElementsByClassName('question');
     if (elements[0].disabled === false && confirm("You didn't save your changes, are you sure you want to cancel?") == false) {
         return false;

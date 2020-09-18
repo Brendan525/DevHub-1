@@ -16,22 +16,23 @@
 
 @if (loggedUser != "")
 {
-    <form id="questionForm" method="post" action="/DevHub/Create">
+    <div class="content-container-blue">
+        <form class="content-section" id="questionForm" method="post" action="/DevHub/Create">
+            <input class="question-detail" type="hidden" readonly value="0" name="id" />
 
-        <input class="question-detail" type="hidden" readonly value="0" name="id" />
-        <input class="upper-left question-detail" type="hidden" readonly name="username" value="@loggedUser" />
-        <input class="upper-left question-detail" type="text" disabled value="@loggedUser" />
-        <input class="question question-detail" type="text" value="" name="category" placeholder="Category" required />
-        <input class="question question-detail" type="text" value="" name="title" placeholder="Title" required />
+            <input class="question-detail" type="hidden" readonly name="username" value="@loggedUser" />
+            <input class="question-detail" type="text" disabled value="@loggedUser" />
+            <input class="question-detail" type="text" disabled value="@ViewData["Today"]" name="posted" />
+            <input class="question-detail" name="status" hidden placeholder="Open" value="0" />
+            <input class="question-detail" disabled placeholder="Open" value="Open" />
+            <br />
+            <input class="question-detail" type="text" value="" name="category" placeholder="Category" required />
+            <input class="question-detail" type="text" value="" name="title" placeholder="Title" required />
+            <input class="question-detail" type="text" value="" name="tags" placeholder="#Tags" required />
+            <br />
+            <textarea class="text-input" cols="76" rows="10" name="detail" id="detail" placeholder="Your Question?" required></textarea><br />
 
-        <input class="question-detail" type="text" disabled value="@ViewData["Today"]" name="posted" />
-
-        <input class="question question-detail" name="status" hidden placeholder="Open" value="0" />
-        <input class="question question-detail" disabled placeholder="Open" value="Open" />
-
-        <input class="question question-detail" type="text" value="" name="tags" placeholder="#Tags" required />
-        <textarea class="question bottom-right" cols="76" rows="10" name="detail" id="detail" placeholder="Your Question?" required></textarea><br />
-
-        <input class="question btn btn-dark" type="submit" name="action" value="Post" />
-    </form>
+            <input class="question btn btn-dark" type="submit" name="action" value="Post" />
+        </form>
+    </div>
 }

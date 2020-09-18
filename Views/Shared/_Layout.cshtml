@@ -31,6 +31,12 @@
                                 </form>
                             </div>
                             }
+                            else
+                            {
+                                <div class="loginbtnright">
+                                    @Html.ViewContext.HttpContext.Request.Cookies["Username"]
+                                </div>
+                            }
                         </li>
                     </ul>
                     
