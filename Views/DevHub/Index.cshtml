@@ -22,6 +22,7 @@
                 <option value="tags">Tags</option>
                 <option value="title">Title</option>
                 <option value="detail">Question Body</option>
+                <option value="category">Category</option>
             </select>
             <input type="submit" value="Go" />
         </form>
@@ -39,5 +40,30 @@
         <div class="list-inline">
             <a asp-action="Detail" asp-controller="DevHub" asp-route-id="@q.id">@q.title (@q.username)</a>
         </div>
+    }
+</div>
+
+<h3>Categories</h3>
+<div>
+    @foreach (string cat in (List<string>)ViewData["category"] )
+    {
+        <form method="post" action="/DevHub/Index">
+            <input type="text" hidden name="column" value="category"/>
+            <input type="text" hidden name="search" value="@cat"/>
+            <input type="submit" value="@cat" />
+
+        </form>
+    }
+</div>
+
+<h3>Tags</h3>
+<div>
+    @foreach(string tag in (List<string>)ViewData["tags"])
+    {
+       <form method="post" action="/DevHub/Index">
+           <input type="text" hidden name="column" value="tags"/>
+           <input type="text" hidden name="search" value="@tag" />
+           <input type="submit" value="@tag" />
+       </form>
     }
 </div>
